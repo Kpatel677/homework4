@@ -455,7 +455,7 @@ function saveData() {
     }
 }
 
-// Used W3School as Reference
+// Used W3School as Reference// 
 window.addEventListener('DOMContentLoaded', () => {
     const status = localStorage.getItem("rememberMeStatus");
     const checkbox = document.getElementById("rememberMe");
@@ -465,8 +465,13 @@ window.addEventListener('DOMContentLoaded', () => {
     } else {
         checkbox.checked = true;
     }
-});
 
+    const dateElement = document.getElementById('currentDate');
+    if (dateElement) {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        dateElement.textContent = new Date().toLocaleDateString(undefined, options);
+    }
+});
 function loadFromLocalStorage() {
     if (localStorage.getItem("stored_lastname")) {
         document.getElementById("lastname").value = localStorage.getItem("stored_lastname");
