@@ -419,28 +419,53 @@ function checkUser() {
 }
 
 function saveData() {
-    let rememberMe = document.getElementById("rememberMe").checked;
-    
-    if (rememberMe) {
+    const checkbox = document.getElementById("rememberMe");
+    const isChecked = checkbox.checked;
+
+    localStorage.setItem("rememberMeStatus", isChecked);
+
+    if (isChecked) {
         let fName = document.getElementById("firstname").value;
         let lName = document.getElementById("lastname").value;
         let email = document.getElementById("email").value;
+        let phone = document.getElementById("phone").value;
+        let addr1 = document.getElementById("addr1").value;
+        let city  = document.getElementById("city").value;
+        let state = document.getElementById("state").value;
+        let zip   = document.getElementById("zipcode").value;
 
-        if (fName !== "") {
-            setCookie("firstname", fName, 48);
-        }
+        if (fName !== "") setCookie("firstname", fName, 48);
         if (lName) localStorage.setItem("stored_lastname", lName);
         if (email) localStorage.setItem("stored_email", email);
         
-        localStorage.setItem("stored_phone", document.getElementById("phone").value);
-        localStorage.setItem("stored_addr1", document.getElementById("addr1").value);
-        localStorage.setItem("stored_city", document.getElementById("city").value);
-        localStorage.setItem("stored_state", document.getElementById("state").value);
-        localStorage.setItem("stored_zip", document.getElementById("zipcode").value);
+        localStorage.setItem("stored_phone", phone);
+        localStorage.setItem("stored_addr1", addr1);
+        localStorage.setItem("stored_city", city);
+        localStorage.setItem("stored_state", state);
+        localStorage.setItem("stored_zip", zip);
     } else {
-        expireUser();
+        localStorage.removeItem("stored_lastname");
+        localStorage.removeItem("stored_email");
+        localStorage.removeItem("stored_phone");
+        localStorage.removeItem("stored_addr1");
+        localStorage.removeItem("stored_city");
+        localStorage.removeItem("stored_state");
+        localStorage.removeItem("stored_zip");
+        setCookie("firstname", "", -1); 
     }
 }
+
+// Used W3School as Reference
+window.addEventListener('DOMContentLoaded', () => {
+    const status = localStorage.getItem("rememberMeStatus");
+    const checkbox = document.getElementById("rememberMe");
+
+    if (status !== null) {
+        checkbox.checked = (status === "true");
+    } else {
+        checkbox.checked = true;
+    }
+});
 
 function loadFromLocalStorage() {
     if (localStorage.getItem("stored_lastname")) {
